@@ -1,5 +1,5 @@
 package jkumensa.api;
 
 public enum MensaFoodCharacteristic {
-    VEGAN, VEGETARIAN, BRAINFOOD, FISH, MSC;
+    UNKNOWN, VEGAN, VEGETARIAN, BRAINFOOD, FISH, MSC;
 }
