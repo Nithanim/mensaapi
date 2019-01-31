@@ -110,6 +110,11 @@ public class AllergyCodeSet implements Set<Character> {
             bits &= ~(1 << z);
             return (char) ('A' + z);
         }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
     }
 
     @Override
