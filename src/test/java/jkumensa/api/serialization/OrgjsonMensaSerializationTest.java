@@ -2,7 +2,6 @@ package jkumensa.api.serialization;
 
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Date;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.HashSet;
@@ -96,7 +95,7 @@ public class OrgjsonMensaSerializationTest {
             )
         );
         
-        MensaApiResultData expected = new MensaApiResultData(new Date(2018-1900, 4-1, 9), expectedData);
+        MensaApiResultData expected = new MensaApiResultData(1523232000, expectedData);
 
         OrgjsonMensaSerialization ser = new OrgjsonMensaSerialization();
         String json = ser.toJson(expected);
@@ -124,7 +123,7 @@ public class OrgjsonMensaSerializationTest {
         }
     }
     private void assertMensaApiResult(MensaApiResult expected, MensaApiResult actual) {
-        Assert.assertEquals(expected.getDate(), actual.getDate());
+        Assert.assertEquals(expected.getDatestamp(), actual.getDatestamp());
         assertData(expected.getData(), actual.getData());
     }
 

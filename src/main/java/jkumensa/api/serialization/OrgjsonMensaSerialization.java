@@ -1,9 +1,6 @@
 package jkumensa.api.serialization;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.EnumMap;
 import java.util.EnumSet;
 import java.util.List;
@@ -31,19 +28,13 @@ public class OrgjsonMensaSerialization {
     }
 
     private MensaApiResult mensaApiResultFromJson(JSONObject o) {
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-        Date date;
-        try {
-            date = f.parse(o.getString("date"));
-        } catch (ParseException ex) {
-            throw new RuntimeException(ex);
-        }
+        long datestamp = o.getLong("datestamp");
         Map<Mensa, List<? extends MensaCategory>> data = mensaDataFromJson(o.getJSONObject("data"));
-        return new MensaApiResultData(date, data);
+        return new MensaApiResultData(datestamp, data);
     }
 
     private Map<Mensa, List<? extends MensaCategory>> mensaDataFromJson(JSONObject o) {
-        Map<Mensa, List<? extends MensaCategory>> data = new EnumMap<Mensa, List<? extends MensaCategory>>(Mensa.class);
+        Map<Mensa, List<? extends MensaCategory>> data = new EnumMap<>(Mensa.class);
         for (String k : o.keySet()) {
             Mensa mensa;
             try {
@@ -55,7 +46,7 @@ public class OrgjsonMensaSerialization {
 
             JSONArray jsonCategories = o.getJSONArray(k);
 
-            List<MensaCategoryData> categories = new ArrayList<MensaCategoryData>();
+            List<MensaCategoryData> categories = new ArrayList<>();
             for (Object jsonCat : jsonCategories) {
                 categories.add(categoryFromJson((JSONObject) jsonCat));
             }
@@ -77,7 +68,7 @@ public class OrgjsonMensaSerialization {
     }
 
     private List<MensaMealData> mealsFromJson(JSONArray a) {
-        ArrayList<MensaMealData> meals = new ArrayList<MensaMealData>();
+        ArrayList<MensaMealData> meals = new ArrayList<>();
         for (Object o : a) {
             JSONObject d = (JSONObject) o;
             MensaMealData meal = new MensaMealData();
@@ -117,10 +108,8 @@ public class OrgjsonMensaSerialization {
     }
 
     public String toJson(MensaApiResult mar) {
-        SimpleDateFormat f = new SimpleDateFormat("yyyy-MM-dd");
-
         JSONObject r = new JSONObject();
-        r.put("date", f.format(mar.getDate()));
+        r.put("datestamp", mar.getDatestamp());
         r.put("data", toJson(mar.getData()));
 
         return r.toString();

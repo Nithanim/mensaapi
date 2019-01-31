@@ -1,6 +1,5 @@
 package jkumensa.api.data;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import jkumensa.api.Mensa;
@@ -10,7 +9,7 @@ import lombok.Value;
 
 @Value
 public class MensaApiResultData implements MensaApiResult {
-    Date date;
+    long datestamp;
     
     Map<Mensa, List<? extends MensaCategory>> data;
 }
